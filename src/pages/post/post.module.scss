@@ -1,1 +1,51 @@
 // TODO
+
+.banner {
+    width: 100%;
+    object-fit: cover;
+}
+
+.post {
+
+    //max-width: 720px;
+    margin: auto 0;
+    padding-bottom: 2rem;
+
+    h1 {
+        display: block;
+        font-size: 3rem;
+        margin-top: 2rem;
+        line-height: 2rem;
+        transition: 0.2s;
+    }
+
+    ul {
+        list-style-type: none;
+        display: flex;
+        margin-top: 1.5rem;
+
+        li {
+            color: var(--info);
+            
+            & + li {
+                margin: auto 0.5rem;
+            }
+        }
+    }
+
+    strong {
+        display: block;
+        font-size: 1.5rem;
+        margin-top: 1rem;
+        line-height: 2rem;
+        transition: 0.2s;
+    }
+
+    p {
+        color: var(--info);
+        margin-top: 0.5rem;
+        line-height: 1.625rem;
+        text-align: justify;
+    }
+
+}
