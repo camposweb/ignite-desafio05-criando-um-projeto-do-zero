@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { getPrismicClient } from '../../services/prismic'
+import { getPrismicClient } from '../../services/prismic';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-dom';
 import { useRouter } from 'next/router';
@@ -37,6 +37,15 @@ interface PostProps {
 
  export default function Post({ post }: PostProps) {
 
+  const totalWords = post.data.content.reduce((total, contentItem) => {
+    total += contentItem.heading.split(' ').length;
+    const words = contentItem.body.map(item => item.text.split(' ').length);
+    words.map(word => (total += word));
+    return total;
+  }, 0)
+
+  const readTime = Math.ceil(totalWords / 200);
+
   const router = useRouter();
 
   if (router.isFallback) {
@@ -45,7 +54,9 @@ interface PostProps {
 
    return (
      <>
-      
+     <Head>
+       <title>{`${post.data.title} | spacetraveling`}</title>
+     </Head>
       <Header />
       <img src={post.data.banner.url} alt="imagem" className={styles.banner} />
       <main className={commonStyles.container}>
@@ -60,7 +71,7 @@ interface PostProps {
                                   }
             </li>
             <li><FiUser /> {post.data.author}</li>
-            <li><FiClock /> 4 min</li>
+            <li><FiClock /> {readTime} min</li>
           </ul>
           {post.data.content.map(content => {
             return (
@@ -82,21 +93,21 @@ interface PostProps {
 export const getStaticPaths: GetStaticPaths = async () => {
   const prismic = getPrismicClient();
   const posts = await prismic.query([
-    Prismic.Predicates.at('document-type', 'post'),
+    Prismic.Predicates.at('document.type', 'post'),
   ]);
 
   const paths = posts.results.map(post => {
     return {
       params: {
         slug: post.uid,
-      }
-    }
-  })
+      },
+    };
+  });
  
   return {
     paths,
     fallback: true,
-  }
+  };
 };
 
 export const getStaticProps: GetStaticProps = async context => {
