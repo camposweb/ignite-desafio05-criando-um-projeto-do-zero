@@ -8,6 +8,7 @@ export default class MyDocument extends Document {
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="shortcut icon" href="favicon.png" type="image/png" />
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+          <script async defer src="https://static.cdn.prismic.io/prismic.js?new=true&repo=spacetraveling-camposweb"></script>
         </Head>
         <body>
           <Main />
